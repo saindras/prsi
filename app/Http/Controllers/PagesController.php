@@ -12,9 +12,9 @@ class PagesController extends Controller
     {
         return view('home');
     }	
-    public function about()
+    public function halamanInput()
     {
-        return view('about');
+        return view('dataPeserta.create');
     }
     public function contact()
     {

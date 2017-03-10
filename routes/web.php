@@ -17,5 +17,14 @@
 });*/
 
 Route::get('/', 'PagesController@home');
-Route::get('/about', 'PagesController@about');
+Route::get('/halamanInput', 'dataPesertaController@create');
+Route::post('/halamanInput', 'dataPesertaController@store');
 Route::get('/contact', 'PagesController@contact');
+
+Route::get('/listPeserta', 'dataPesertaController@index');
+Route::get('/listPeserta.data', 'dataPesertaController@dataPeserta');
+
+Route::get('/detilPeserta/{slug?}', 'dataPesertaController@show');
+Route::get('/detilPeserta/{slug?}/edit','dataPesertaController@edit');
+Route::post('/detilPeserta/{slug?}/edit','dataPesertaController@update');
+Route::post('/detilPeserta/{slug?}/delete','dataPesertaController@destroy'); 
