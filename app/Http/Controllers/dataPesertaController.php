@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\dataPesertaFormRequest;
 use App\dataPeserta;
-use dataPeserta;
+use Yajra\Datatables\Datatables;
 
 class dataPesertaController extends Controller
 {
@@ -21,7 +21,7 @@ class dataPesertaController extends Controller
         //return view('dataPeserta.index');
     }
 
-    public function dataPeserta()
+    public function getDataPeserta()
     {
         $dataPeserta = dataPeserta::select('idpeserta','namapeserta','jk','tgllahir','asalsekolah')->get();
         return Datatables::of($dataPeserta)->make(true);

@@ -21,8 +21,8 @@ Route::get('/halamanInput', 'dataPesertaController@create');
 Route::post('/halamanInput', 'dataPesertaController@store');
 Route::get('/contact', 'PagesController@contact');
 
-Route::get('/listPeserta', 'dataPesertaController@index');
-Route::get('/listPeserta.data', 'dataPesertaController@dataPeserta');
+Route::get('listPeserta', 'dataPesertaController@index');
+Route::get('listPeserta/get-dataPeserta', 'dataPesertaController@getDataPeserta');
 
 Route::get('/detilPeserta/{slug?}', 'dataPesertaController@show');
 Route::get('/detilPeserta/{slug?}/edit','dataPesertaController@edit');

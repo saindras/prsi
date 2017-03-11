@@ -32,23 +32,23 @@
 
 @endsection
 
-@section('scripts') 
+@push('js')
     <script type="text/javascript">
     $(function() {
         var oTable = $('#table-datapeserta').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: '{{ url("/listPeserta.data") }}'
+                url: '{{ url("listPeserta/get-dataPeserta") }}'
             },
             columns: [
             {data: 'idpeserta', name: 'idPeserta'},
             {data: 'namapeserta', name: 'namaPeserta'},
             {data: 'jk', name: 'jk'},
             {data: 'tgllahir', name: 'tglLahir'},
-            {data: 'asalsekolah', name: 'asalSekolah'},
+            {data: 'asalsekolah', name: 'asalSekolah'}
         ],
         });
     });
 </script>
-@endsection
+@endpush
