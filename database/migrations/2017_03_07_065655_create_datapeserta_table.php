@@ -18,10 +18,17 @@ class CreateDatapesertaTable extends Migration
             $table->string('namapeserta', 50);
             $table->enum('jk',['L', 'P']);
             $table->date('tgllahir');
-            $table->string('asalsekolah', 100);
-            $table->integer('umur')->nullable();
-            $table->char('kelompokumur',2)->nullable();
+            $table->string('asalsekolah', 50);
+            $table->integer('umur');
+            $table->char('kelompokumur',3);
             $table->timestamps();
+            $table->string('slug',15);
+            $table->string('nolomba1',50);
+            $table->string('nolomba2',50);
+            $table->string('nolomba3',50);
+            $table->string('nolomba4',50);
+            $table->string('namaklub',50);
+            $table->time('waktusebelum');
         });
     }
 

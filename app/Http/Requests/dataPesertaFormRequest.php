@@ -27,7 +27,13 @@ class dataPesertaFormRequest extends FormRequest
             'namaPeserta' => 'required|min:3|max:50',
             'jk' => 'required',
             'tglLahir' => 'required|date_format:"Y-m-d"',
-            'asalSekolah' => 'required|min:5|max:100',
+            'asalSekolah' => 'required',
+            'namaKlub' => 'required',
+            'umur' => 'required',
+            'kelompokUmur' => 'required',            
+            'namaKlub' => 'required',
+            'waktuSebelum' => 'required|date_format:H:i:s',
+            'noLomba1' => 'required',
         ];
     }
 }

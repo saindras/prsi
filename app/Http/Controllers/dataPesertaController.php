@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\dataPesertaFormRequest;
 use App\dataPeserta;
 use Yajra\Datatables\Datatables;
+use App\DataTables\dataPesertaDataTable;
+use DB;
 
 class dataPesertaController extends Controller
 {
@@ -14,18 +16,53 @@ class dataPesertaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    /*public function index(dataPesertaDataTable $dataTable)
+    {
+        return $dataTable->render('dataPeserta.index');
+    }*/
+
     public function index()
     {
         $dataPeserta = dataPeserta::all();
-        return view('dataPeserta.index', compact('dataPeserta'));
-        //return view('dataPeserta.index');
+        return view('dataPeserta.index', compact('dataPeserta'));        
     }
 
-    public function getDataPeserta()
+    //Datatables function
+    public function getDataPeserta(Request $request)
     {
-        $dataPeserta = dataPeserta::select('idpeserta','namapeserta','jk','tgllahir','asalsekolah')->get();
-        return Datatables::of($dataPeserta)->make(true);
+        //$dataPeserta = dataPeserta::select('idpeserta','namapeserta','jk','tgllahir','asalsekolah','umur','kelompokumur')->get();
+        //return Datatables::of($dataPeserta)->make(true);
+        //return Datatables::eloquent($dataPeserta)->make(true);
+        
         //return Datatables::of(dataPeserta::query())->make(true);
+        
+        DB::statement(DB::raw('set @rownum=0'));
+        $dataPeserta = dataPeserta::select([
+            DB::raw('@rownum  := @rownum  + 1 AS rownum'),            
+            'namapeserta',
+            'jk',            
+            'asalsekolah', 
+            'namaklub',           
+            'kelompokumur',
+            'waktusebelum',
+            'nolomba1',
+            'nolomba2',
+            'nolomba3',
+            'nolomba4',
+            'slug']);
+        $datatables = Datatables::of($dataPeserta);
+
+        if ($keyword = $request->get('search')['value']) {
+            $datatables->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        }
+        
+        return Datatables::of($dataPeserta)
+            ->addColumn('action', function ($dataPeserta) {
+                return '<a href="/detilPeserta/'.$dataPeserta->slug.'" class="btn btn-xs btn-primary"><i class="material-icons">mode_edit</i>Edit</a>';
+            })
+            ->editColumn('namapeserta', '{{$namapeserta}}')            
+            ->make(true);
     }
 
     /**
@@ -52,11 +89,17 @@ class dataPesertaController extends Controller
             'jk' => $request->get('jk'),
             'tglLahir' => $request->get('tglLahir'),
             'asalSekolah' => $request->get('asalSekolah'),
-            'slug' => $slug
+            'slug' => $slug,
+            'umur' => $request->get('umur'),
+            'kelompokumur' => $request->get('kelompokUmur'),
+            'namaklub' => $request->get('namaKlub'),
+            'waktusebelum' => $request->get('waktuSebelum'),
+            'nolomba1' => $request->get('noLomba1'),
+            'nolomba2' => $request->get('noLomba2'),
+            'nolomba3' => $request->get('noLomba3'),
+            'nolomba4' => $request->get('noLomba4'),            
         ));
-
         $dataPeserta->save();
-
         return redirect('/halamanInput')->with('status', 'Data berhasil diinputkan.');
     }
 
@@ -98,6 +141,8 @@ class dataPesertaController extends Controller
         $dataPeserta->jk = $request->get('jk');
         $dataPeserta->tgllahir = $request->get('tglLahir');
         $dataPeserta->asalsekolah = $request->get('asalSekolah');
+        $dataPeserta->umur = $request->get('umur');
+        $dataPeserta->kelompokumur = $request->get('kelompokUmur');
         $dataPeserta->save();
         return redirect(action('dataPesertaController@edit', $dataPeserta->slug))->with('status', 'Data peserta berhasil diupdate.');
     }

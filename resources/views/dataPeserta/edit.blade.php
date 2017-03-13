@@ -45,7 +45,24 @@
                     <div class="form-group">
                         <label for="tglLahir" class="col-lg-2 control-label">Tanggal Lahir</label>
                         <div class="col-lg-10">
-                            <input type="text" name="tglLahir" id="datepicker" value="{!! $dataPeserta->tgllahir !!}">                            
+                            <input type="text" name="tglLahir" id="datepicker" value="{!! $dataPeserta->tgllahir !!}" class="form-control"> 
+                            <span class="help-block">Masukkan tanggal lahir peserta.</span>                                                       
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="umur" class="col-lg-2 control-label">Umur</label>
+                        <div class="col-lg-10">                              
+                            <input readonly type="text" name="umur" id="umur" value="{!! $dataPeserta->umur !!}" class="form-control">  
+                            <span class="help-block">Silakan ubah tanggal lahir apabila ingin mengubah umur.</span>                                                      
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kelompokUmur" class="col-lg-2 control-label">Kelompok Umur</label>
+                        <div class="col-lg-10">                            
+                            <input readonly type="text" name="kelompokUmur" id="kelompokumur" value="{!! $dataPeserta->kelompokumur !!}" class="form-control">
+                            <span class="help-block">Silakan ubah tanggal lahir apabila ingin mengubah kelompok umur.</span>                          
                         </div>
                     </div>
 
